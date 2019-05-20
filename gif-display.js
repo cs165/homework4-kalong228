@@ -2,13 +2,14 @@
 // is being shown and can select a new random gif to be shown.
 // 
 // See HW4 writeup for more hints and details.
+
 var url;
-var scr = document.getElementById('screen');
-var bkground = document.getElementById('background');
+var g = document.getElementById('music');
+var bg = document.getElementById('background');
 class GifDisplay {
-  constructor(Element) {
+  constructor(containerElement) {
     this.urls_gif = [];
-    this.Element = Element;
+    this.containerElement = containerElement;
     this.onDataReady_gif = this.onDataReady_gif.bind(this);
     this.change = this.change.bind(this);
     this.currentIndex = 0;
@@ -26,14 +27,15 @@ class GifDisplay {
     for (const result of json.data) {
         this.urls_gif.push(result.images.downsized.url);
     }
+  //  console.log("gif = "+urls_gif.length);
     if(this.urls_gif.length < 2){
-      err.classList.remove('inactive');
+      e.classList.remove('inactive');
     }
     else{
       app.menu.hide();
-      app.screen.show();
+      app.music.show();
       this.currentIndex = Math.floor(Math.random()*this.urls_gif.length);
-      scr.style.backgroundImage= "url(" + this.urls_gif[this.currentIndex] + ")";
+      g.style.backgroundImage= "url(" + this.urls_gif[this.currentIndex] + ")";
       this.next_gif();
     }
   }
@@ -42,20 +44,22 @@ class GifDisplay {
     while(this.changeIndex == this.currentIndex){
         this.changeIndex =  Math.floor(Math.random()*this.urls_gif.length);
     }
-    if(scr.style.zIndex == 2)
-      bkground.style.backgroundImage= "url(" + this.urls_gif[this.changeIndex] + ")";
+    if(g.style.zIndex == 2)
+      bg.style.backgroundImage= "url(" + this.urls_gif[this.changeIndex] + ")";
     else{
-      scr.style.backgroundImage= "url(" + this.urls_gif[this.changeIndex] + ")";
+      g.style.backgroundImage= "url(" + this.urls_gif[this.changeIndex] + ")";
     }
   }
   change(){
-    if(scr.style.zIndex == 2){
-      bkground.style.zIndex = "2";  
-      scr.style.zIndex = "1";  
+    if(g.style.zIndex == 2){
+  //    console.log("change to second");
+      bg.style.zIndex = "2";  
+      g.style.zIndex = "1";  
     }
     else{
-      scr.style.zIndex = "2";   
-      bkground.style.zIndex = "1";  
+  //    console.log("change to first");
+      g.style.zIndex = "2";   
+      bg.style.zIndex = "1";  
     }
     this.currentIndex = this.changeIndex;
     this.next_gif();

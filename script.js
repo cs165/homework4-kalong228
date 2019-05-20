@@ -9,10 +9,14 @@ function onResponse (res){
 function onDataReady(text){
     var urls = text.split('\n');
     let j = 0;
+ //   console.log(urls);
     for(i=0;i<6;i++){
+        //取title
         let opt = document.createElement('option');
         opt.text = urls[i*5 + 3].split(':')[1].split('"')[1];
-        sele.add(opt);
+        s.add(opt);
+
+        //取URL
         songURL[i] = urls[i*5 + 2].split(' ')[5].split('"')[1];
     }
 }
